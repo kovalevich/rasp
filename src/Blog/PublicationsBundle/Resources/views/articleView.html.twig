@@ -1,0 +1,6 @@
+{% if item|length > 0 %}
+    <h2 class="style1">{{ item.title }}</h2>
+    {{ item.text|raw }}
+{% else %}
+    Нет публикаций
+{% endif %}

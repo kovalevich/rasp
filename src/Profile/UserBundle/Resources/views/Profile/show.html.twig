@@ -1,0 +1,36 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+{% include "FOSUserBundle:Profile:show_content.html.twig" %}
+    <div class="row">
+        <div class="col-sm-6">
+            <h2 class="style1">Ваши карты</h2>
+            {{ include('BelkartaCardBundle::cardsTable.html.twig', { 'items': user.cards }) }}
+            <a href="{{ path('belkarta_card_new', {type: 'classic'}) }}" class="btn btn-success">Купить БелКарта CLASSIC</a> <a href="{{ path('belkarta_card_new', {type: 'platinum'}) }}" class="btn btn-danger">Купить БелКарта PLATINUM</a>
+        </div>
+        <div class="col-sm-5">
+            <h2 class="style1">Ваши партнеры</h2>
+            {% if(user.type < 2) %}
+                Для участия в партнерской программе вам необходимо приобрести <a href="{{ path('belkarta_card_new', {type: 'platinum'}) }}">карту "PLATINUM"</a>
+            {% else %}
+                {{ include('ProfileUserBundle::usersTable.html.twig', { 'items': user.referals }) }}
+
+                <div class="news-on-home-page">
+                    <h3 class="style1">Ваша партнерская ссылка</h3>
+                    <a href="{{ path('profile_user_registration_by_refer', {refer_code: user.id}) }}">http://belkarta.com{{ path('profile_user_registration_by_refer', {refer_code: user.id}) }}</a>
+                </div>
+
+                <br/><br/>
+                <h2 class="style1">Банковские реквизиты</h2>
+                {% if(user.card) %}
+                    <div class="news-on-home-page">
+                    {{user.card}} - {{user.bank}}
+                    </div>
+                {% endif %}
+                <a href="{{ path('profile_user_set') }}">редактировать реквизиты</a>
+                <p style="color: #777; font-size: 0.8em; margin-top: 5px;"><strong>Важно!</strong> Перевод Вознаграждений осуществляется в течении трех рабочих дней на банковские карты БПС-Сбербанк и Беларусбанк. Просим самостоятельно следить за балансом счета Вашей карты.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="clear"></div>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends 'AdminPanelBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="breadcrumb">
+                <li><i class="fa fa-home"></i>
+                    <a href="{{ path('admin_panel_homepage') }}">AdminPanel</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_panel_belkarta_types') }}">Типы компаний</a>
+                </li>
+                <li class="active">Редактирование типа</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="main-header">
+            <h2>Редактировать тип компаний</h2>
+            <em>или создать новый</em>
+        </div>
+
+        <div class="main-content">
+            {{ form(form) }}
+            <!-- /main-content -->
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+
+{% block content %}
+
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+    <div class="contact-form">
+        <h2 class="style1">ВХОД В ЛИЧНЫЙ КАБИНЕТ</h2>
+        <form method="post" action="{{ path("fos_user_security_check") }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <div>
+                <span><label>E-MAIL</label></span>
+                <span><input name="_username" type="text" class="textbox"></span>
+            </div>
+            <div>
+                <span><label>ПАРОЛЬ</label></span>
+                <span><input name="_password" type="password" class="textbox"></span>
+            </div>
+
+            <div>
+                <label class="fancy-checkbox">
+                    <input type="checkbox" name="_remember_me">
+                    <span>Запомнить меня</span>
+                </label>
+            </div>
+
+            <button class="btn btn-success" type="submit">ВОЙТИ</button> или <a href="{{ path('fos_user_registration_register') }}">Зарегистрироваться</a>
+
+        </form>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,118 @@
+{% extends 'AdminPanelBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="breadcrumb">
+                <li><i class="fa fa-home"></i>
+                    <a href="{{ path('admin_panel_homepage') }}">AdminPanel</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_users_index') }}">Пользователи</a>
+                </li>
+                <li class="active">Редактирование пользователя</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="main-header">
+            <h2>Редактировать пользователя</h2>
+            <em>{{ user.username }}</em>
+        </div>
+
+        <div class="main-content">
+            <h3>
+                Логин: <a href="#" id="username" data-type="text" class="editable editable-title" data-pk="{{ user.id }}" data-title="Введите логин">{{ user.username }}</a>
+            </h3>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h3><i class="fa fa-credit-card"></i> Карты пользователя</h3>
+                        </div>
+                        <div class="widget-content no-padding">
+                            пока нет карт
+                        </div>
+                        <div class="widget-footer">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h3><i class="fa fa-phone"></i> Контакты</h3>
+                        </div>
+                        <div class="widget-content no-padding table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <tr><td>e-mail:</td><td>{{ user.email }}</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="widget">
+                        <div class="widget-header">
+                            <h3><i class="fa fa-cog"></i> Настройки</h3>
+                        </div>
+                        <div class="widget-content no-padding table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th colspan="2">Основные</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Тип:</td>
+                                    <td><a href="#" id="type" data-type="select" data-value="{{ user.type }}" class="editable-type" data-pk="{{ user.id }}" data-title="Выберите тип">{% if user.type == 0 %}не активный{% elseif user.type == 1 %}CLASSIC{% else %}PLATINUM{% endif %}</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /main-content -->
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/plugins/bootstrap-editable/bootstrap-editable.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.editable').editable({
+                url: '{{ path('admin_users_edit_editable') }}',
+                ajaxOptions: {
+                    type: 'post',
+                    dataType: 'json'
+                }
+            });
+
+            $('.editable-type').editable({
+                url: '{{ path('admin_users_edit_editable') }}',
+                source: [
+                    {value: 0, text: 'не активный'},
+                    {value: 1, text: 'CLASSIC'},
+                    {value: 2, text: 'PLATINUM'}
+                ]
+            });
+
+            $('.editable-title').editable('option', 'validate', function(v) {
+                if(!v) return 'Имя не может быть пустым';
+            });
+
+        });
+    </script>
+{% endblock %}

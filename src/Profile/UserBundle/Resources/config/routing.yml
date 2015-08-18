@@ -1,0 +1,9 @@
+profile_user_registration:
+    path: /registration
+    defaults: { _controller: ProfileUserBundle:Registration:register }
+
+profile_user_registration_by_refer:
+    path: /registration/{refer_code}
+    defaults: { _controller: ProfileUserBundle:Registration:register }
+    requirements:
+        refer_code:  \d+

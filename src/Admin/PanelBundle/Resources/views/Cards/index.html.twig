@@ -1,0 +1,81 @@
+{% extends 'AdminPanelBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i>
+                <a href="{{ path('admin_panel_homepage') }}">AdminPanel</a>
+            </li>
+            <li class="active">Управление картами БЕЛКАРТ</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+<div class="content">
+    <div class="main-header">
+        <h2>Управление картами</h2>
+        <em><i class="fa fa-credit-card"></i> </em>
+    </div>
+
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="widget widget-table">
+                    <div class="widget-header">
+                        <h3><i class="fa fa-list"></i> Список заказанных карт</h3>
+                    </div>
+                    <div class="widget-content">
+                        <table id="publications-table" class="table table-sorting table-striped table-hover datatable dataTable no-footer">
+                            <thead>
+                            <th>#</th>
+                            <th>Заказчик</th>
+                            <th>Рефер</th>
+                            <th>Телефон</th>
+                            <th>Адрес</th>
+                            <th>Вид</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                            <th></th>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/ply.js') }}"></script>
+    <script type="text/javascript">
+        $('#publications-table').dataTable( {
+            serverSide: true,
+            ajax: '{{ path('ajax_cards') }}',
+            order: [ 0, 'desc' ],
+            columns: [
+                { "data": "id"},
+                { "data": "user", "orderable": false },
+                { "data": "refer", "orderable": false },
+                { "data": "phone" },
+                { "data": "address" },
+                { "data": "type" },
+                { "data": "updated" },
+                { "data": "status" },
+                { "data": "delete", "orderable": false },
+            ]
+        });
+
+        $('#publications-table').on('click', 'a.mod-delete',function(e){
+            Ply.dialog("confirm", "Удалить карту навсегда?")
+                    .done(function (ui) {
+                        document.location.href = e.currentTarget.href;
+                    })
+            return false;
+        });
+    </script>
+{% endblock %}

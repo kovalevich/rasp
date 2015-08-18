@@ -1,0 +1,11 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <h2 class="style1">{{ category.title }}</h2>
+
+    {{ include('BlogPublicationsBundle::articlesList.html.twig', { 'items': pagination }) }}
+
+    <br/><br/>
+    {{ knp_pagination_render(pagination) }}
+
+{% endblock %}

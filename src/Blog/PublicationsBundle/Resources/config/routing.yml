@@ -1,0 +1,7 @@
+publication_view:
+    path: /publication/{slug}
+    defaults: { _controller: BlogPublicationsBundle:Default:index }
+
+category_view:
+    path: /publications/{slug}
+    defaults: { _controller: BlogPublicationsBundle:Default:category, slug: novosti }

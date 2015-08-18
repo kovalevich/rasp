@@ -1,0 +1,10 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="contact-form">
+    <h2 class="style1">РЕГИСТРАЦИЯ</h2>
+    <form method="post" action="{{ form_action }}">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-success">{{ 'registration.submit'|trans }}</button>
+    </form>
+</div>
+

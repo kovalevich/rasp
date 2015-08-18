@@ -1,0 +1,51 @@
+{% extends 'AdminPanelBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i>
+                <a href="{{ path('admin_panel_homepage') }}">AdminPanel</a>
+            </li>
+            <li class="active">Управление типами компаний</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+<div class="content">
+    <div class="main-header">
+        <h2>Управление типами компаний</h2>
+        <em><i class="fa fa-folder"></i> </em>
+    </div>
+
+    <div class="main-content">
+        <div class="widget widget-table">
+            <div class="widget-header">
+                <h3><i class="fa fa-star"></i> Типы компаний</h3>
+            </div>
+            <div class="widget-content no-padding" id="types">
+                {{ include('AdminPanelBundle:Type:typesTable.html.twig', { 'items': types }) }}
+            </div>
+        </div>
+
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/ply.js') }}"></script>
+    <script type="text/javascript">
+
+        $('#types').on('click', 'a.mod-delete',function(e){
+            Ply.dialog("confirm", "Удалить тип навсегда?")
+                    .done(function (ui) {
+                        document.location.href = e.currentTarget.href;
+                    })
+            return false;
+        });
+    </script>
+{% endblock %}

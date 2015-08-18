@@ -1,0 +1,27 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Имя партнера</th>
+        <th>Дата регистрации</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if items|length > 0 %}
+        {% for item in items %}
+            <tr>
+                <td>
+                    {{ item.username }}
+                </td>
+                <td>
+                    {{ item.created|date('d.m.Y') }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="2">У вас пока нет партнеров</td>
+        </tr>
+    {% endif %}
+
+    </tbody>
+</table>

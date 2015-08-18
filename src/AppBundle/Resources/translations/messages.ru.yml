@@ -1,0 +1,14 @@
+# card types
+bla: "bla-bla"
+types:
+    card:
+      1: "CLASSIC"
+      2: "PLATINUM"
+status:
+    card:
+      0: "ожидает оплаты"
+      1: "оплачена"
+      2: "активна"
+
+Previous: "Назад"
+Next: "Вперед"

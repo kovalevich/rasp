@@ -1,0 +1,54 @@
+{% extends 'AdminPanelBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="breadcrumb">
+                <li><i class="fa fa-home"></i>
+                    <a href="{{ path('admin_panel_homepage') }}">AdminPanel</a>
+                </li>
+                <li class="active">Настройки</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="main-header">
+            <h2>Настройки сайта</h2>
+            <em>изменения сохраняются автоматически</em>
+        </div>
+
+        <div class="main-content">
+            <h3>
+                Стоимость карты Classic: <a href="#" id="price" data-type="text" class="editable editable-title" data-pk="{{ classic.id }}" data-title="Введите сумму в бел. рублях">{{ classic.price }}</a>
+            </h3>
+            <h3>
+                Стоимость карты Platinum: <a href="#" id="price" data-type="text" class="editable editable-title" data-pk="{{ platinum.id }}" data-title="Введите сумму в бел. рублях">{{ platinum.price }}</a>
+            </h3>
+            <!-- /main-content -->
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/plugins/bootstrap-editable/bootstrap-editable.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.editable').editable({
+                url: '{{ path('admin_edit_card') }}',
+                ajaxOptions: {
+                    type: 'post',
+                    dataType: 'json'
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

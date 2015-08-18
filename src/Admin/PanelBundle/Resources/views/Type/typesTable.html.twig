@@ -1,0 +1,29 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Тип</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if items|length > 0 %}
+            {% for item in items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td><a href="{{ path('admin_panel_belkarta_types_edit', { 'id': item.id }) }}" title="Редактировать тип">{{ item.title }}</a></td>
+                <td>
+                    <a href="{{ path('admin_panel_belkarta_types_delete', {'id': item.id}) }}" class="mod-delete"><i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">Нет типов</td>
+            </tr>
+        {% endif %}
+
+        </tbody>
+    </table>
+</div>

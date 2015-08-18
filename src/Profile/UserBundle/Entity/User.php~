@@ -1,0 +1,218 @@
+<?php
+// src/Acme/UserBundle/Entity/User.php
+
+namespace Profile\UserBundle\Entity;
+
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * @ORM\Entity(repositoryClass="Profile\UserBundle\Entity\UserRepository")
+ * @ORM\Table(name="profile_user")
+ */
+class User extends BaseUser
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer", nullable=true, options={"default"=0})
+     */
+    protected $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Belkarta\CardBundle\Entity\Card", mappedBy="user")
+     */
+    protected $cards;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="refer")
+     */
+    protected $referals;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="referals")
+     * @ORM\JoinColumn(name="refer", referencedColumnName="id")
+     */
+    protected $refer;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="card", type="string", length=255)
+     */
+    private $card;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bank", type="string", length=255)
+     */
+    private $bank;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->cards = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return User
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Add cards
+     *
+     * @param \Belkarta\CardBundle\Entity\Card $cards
+     * @return User
+     */
+    public function addCard(\Belkarta\CardBundle\Entity\Card $cards)
+    {
+        $this->cards[] = $cards;
+
+        return $this;
+    }
+
+    /**
+     * Remove cards
+     *
+     * @param \Belkarta\CardBundle\Entity\Card $cards
+     */
+    public function removeCard(\Belkarta\CardBundle\Entity\Card $cards)
+    {
+        $this->cards->removeElement($cards);
+    }
+
+    /**
+     * Get cards
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
+
+    /**
+     * Add referals
+     *
+     * @param \Profile\UserBundle\Entity\User $referals
+     * @return User
+     */
+    public function addReferal(\Profile\UserBundle\Entity\User $referals)
+    {
+        $this->referals[] = $referals;
+
+        return $this;
+    }
+
+    /**
+     * Remove referals
+     *
+     * @param \Profile\UserBundle\Entity\User $referals
+     */
+    public function removeReferal(\Profile\UserBundle\Entity\User $referals)
+    {
+        $this->referals->removeElement($referals);
+    }
+
+    /**
+     * Get referals
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReferals()
+    {
+        return $this->referals;
+    }
+
+    /**
+     * Set refer
+     *
+     * @param \Profile\UserBundle\Entity\User $refer
+     * @return User
+     */
+    public function setRefer(\Profile\UserBundle\Entity\User $refer = null)
+    {
+        $this->refer = $refer;
+
+        return $this;
+    }
+
+    /**
+     * Get refer
+     *
+     * @return \Profile\UserBundle\Entity\User 
+     */
+    public function getRefer()
+    {
+        return $this->refer;
+    }
+}
